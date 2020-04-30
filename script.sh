@@ -39,9 +39,20 @@ cat xa* > $NAME
 if [[ $(md5sum $NAME | cut -d ' ' -f 1) != $MD5 ]]
 then
     log checksum error
-else
-    mv $NAME $CWD
-    log complete $NAME successfully created
+    rm --force --recursive $TEMP
+    exit
 fi
+
+if [[ ! -w $CWD ]]
+then
+    # if directory not writable
+    log warn sudo access is required
+    sudo echo >/dev/null
+    # one more check if the user abort the password question
+    [[ -z `sudo -n uptime 2>/dev/null` ]] && log abort sudo required; exit 1;
+fi
+
+mv $NAME $CWD
+log complete $NAME successfully created
 
 rm --force --recursive $TEMP

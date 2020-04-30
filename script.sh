@@ -50,9 +50,10 @@ then
     sudo echo >/dev/null
     # one more check if the user abort the password question
     [[ -z `sudo -n uptime 2>/dev/null` ]] && log abort sudo required; exit 1;
+    sudo mv $NAME $CWD
+else
+    mv $NAME $CWD
 fi
-
-mv $NAME $CWD
 log complete $NAME successfully created
 
 rm --force --recursive $TEMP

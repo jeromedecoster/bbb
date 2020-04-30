@@ -1,4 +1,4 @@
-## Download cat3.jpg
+## cat3.jpg
 
 ### curl
 
